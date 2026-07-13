@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victoria Paz — Tecnologia, Gestão e Território</title>
+<meta name="description" content="Portfólio de Victoria Paz: tecnologia, gestão estratégica e educação aplicadas a projetos com impacto real.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     TOKENS — troque as cores/fontes aqui se quiser mudar tudo de uma vez
+     ========================================================= */
+  :root{
+    --tinta:      #0F2438;   /* texto principal, quase preto-azulado */
+    --azul:       #1B5A8A;   /* azul principal */
+    --azul-vivo:  #2F86C9;   /* azul de destaque / links / hover */
+    --amarelo:    #FFC63C;   /* amarelo de destaque, usar com moderação */
+    --branco:     #f3efe4;   /* fundo quente, não é branco puro */
+    --papel:      #FFFFFF;   /* cards/blocos sobre o fundo quente */
+    --linha:      rgba(15,36,56,0.12);
+
+    --display: 'Space Grotesk', sans-serif;
+    --corpo:   'Inter', sans-serif;
+    --mono:    'JetBrains Mono', monospace;
+
+    --container: 1100px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--branco);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+  a{ color: inherit; text-decoration: none; }
+
+  .wrap{
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  ::selection{ background: var(--amarelo); color: var(--tinta); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* =========================================================
+     NAVEGAÇÃO
+     ========================================================= */
+  header{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,246,236,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--linha);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 72px;
+  }
+  .logo{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+  .logo span{ color: var(--azul-vivo); }
+  .nav-links{ display:flex; gap: 28px; list-style:none; }
+  .nav-links a{
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    text-transform: lowercase;
+    color: var(--tinta);
+    opacity: 0.75;
+    transition: opacity .2s ease, color .2s ease;
+  }
+  .nav-links a:hover{ opacity:1; color: var(--azul-vivo); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; }
+
+  @media (max-width: 760px){
+    .nav-links{
+      position: fixed; top:72px; left:0; right:0;
+      background: var(--papel);
+      flex-direction: column;
+      padding: 20px 24px 28px;
+      gap: 18px;
+      border-bottom: 1px solid var(--linha);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all .25s ease;
+    }
+    .nav-links.aberto{ transform: translateY(0); opacity: 1; pointer-events: all; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* =========================================================
+     HERO — a tese do site: tecnologia que chega no território
+     ========================================================= */
+  .hero{
+    position: relative;
+    padding: 96px 0 80px;
+    overflow: hidden;
+  }
+
+  /* grade de pontos: motivo "circuito/mapa de território" usado como fio condutor visual */
+  .grade-pontos{
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--linha) 1.4px, transparent 1.4px);
+    background-size: 26px 26px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+    pointer-events: none;
+  }
+
+  .hero-conteudo{ position: relative; max-width: 760px; }
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--azul-vivo);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width: 8px; height: 8px;
+    background: var(--amarelo);
+    border-radius: 2px;
+    display:inline-block;
+  }
+
+  h1{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 5.6vw, 4.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    margin-bottom: 26px;
+  }
+  h1 em{
+    font-style: normal;
+    color: var(--azul-vivo);
+    position: relative;
+  }
+
+  .hero p.lead{
+    font-size: 1.15rem;
+    max-width: 560px;
+    color: var(--tinta);
+    opacity: 0.82;
+    margin-bottom: 36px;
+  }
+
+  .hero-cta{ display:flex; gap:16px; flex-wrap: wrap; }
+
+  .btn{
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    padding: 14px 26px;
+    border-radius: 4px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform .15s ease, background .2s ease, color .2s ease;
+  }
+  .btn-primario{
+    background: var(--tinta);
+    color: var(--branco);
+  }
+  .btn-primario:hover{ background: var(--azul-vivo); transform: translateY(-2px); }
+  .btn-secundario{
+    border: 1.5px solid var(--tinta);
+    color: var(--tinta);
+  }
+  .btn-secundario:hover{ background: var(--tinta); color: var(--branco); transform: translateY(-2px); }
+
+  /* faixa de números — ajuste os valores para os seus */
+  .hero-numeros{
+    display:flex; gap: 48px; flex-wrap: wrap;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--linha);
+  }
+  .numero b{
+    font-family: var(--display);
+    font-size: 2rem;
+    display:block;
+    color: var(--tinta);
+  }
+  .numero span{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    opacity: 0.65;
+  }
+
+  /* =========================================================
+     SEÇÃO GENÉRICA
+     ========================================================= */
+  section{ padding: 88px 0; }
+  section + section{ border-top: 1px solid var(--linha); }
+
+  .cabecalho-secao{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap: 24px; margin-bottom: 48px; flex-wrap: wrap;
+  }
+  .cabecalho-secao .rotulo{
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--azul-vivo);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    display:block;
+  }
+  .cabecalho-secao h2{
+    font-family: var(--display);
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    letter-spacing: -0.02em;
+  }
+  .cabecalho-secao p{
+    max-width: 380px;
+    opacity: 0.75;
+    font-size: 0.95rem;
+  }
+
+  /* =========================================================
+     SOBRE
+     ========================================================= */
+  .sobre-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .sobre-foto{
+    aspect-ratio: 4/5;
+    background: var(--azul);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .sobre-foto img{ width:100%; height:100%; object-fit: cover; }
+  .sobre-foto .placeholder{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    color: rgba(250,246,236,0.6);
+    font-family: var(--mono); font-size: 0.85rem; text-align:center; padding: 20px;
+  }
+  .sobre-texto p{ margin-bottom: 18px; font-size: 1.02rem; opacity: 0.88; }
+  .sobre-texto strong{ color: var(--azul); }
+
+  .tags{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 28px; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    padding: 7px 14px;
+    border: 1px solid var(--linha);
+    border-radius: 100px;
+    background: var(--papel);
+  }
+
+  @media (max-width: 760px){
+    .sobre-grid{ grid-template-columns: 1fr; }
+    .sobre-foto{ max-width: 280px; }
+  }
+
+  /* =========================================================
+     PILARES — os 3 eixos de atuação
+     ========================================================= */
+  .pilares{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .pilar{
+    background: var(--papel);
+    padding: 40px 30px;
+    transition: background .2s ease;
+  }
+  .pilar:hover{ background: var(--branco); }
+  .pilar .num{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--azul-vivo);
+    margin-bottom: 22px;
+    display:block;
+  }
+  .pilar h3{
+    font-family: var(--display);
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .pilar p{ font-size: 0.92rem; opacity: 0.75; }
+
+  @media (max-width: 760px){
+    .pilares{ grid-template-columns: 1fr; }
+  }
+
+  /* =========================================================
+     PROJETOS
+     ========================================================= */
+  .projetos{ display:flex; flex-direction:column; }
+  .projeto{
+    display:grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 26px 0;
+    border-top: 1px solid var(--linha);
+    transition: padding-left .2s ease;
+  }
+  .projetos .projeto:last-child{ border-bottom: 1px solid var(--linha); }
+  .projeto:hover{ padding-left: 10px; }
+  .projeto .ano{
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    opacity: 0.55;
+  }
+  .projeto h3{
+    font-family: var(--display);
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .projeto p{ font-size: 0.9rem; opacity: 0.72; max-width: 480px; }
+  .projeto .seta{
+    font-family: var(--mono);
+    font-size: 1.2rem;
+    color: var(--azul-vivo);
+    opacity: 0;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .projeto:hover .seta{ opacity: 1; transform: translateX(4px); }
+
+  @media (max-width: 640px){
+    .projeto{ grid-template-columns: 1fr; gap: 8px; }
+    .projeto .seta{ display:none; }
+  }
+
+  /* =========================================================
+     TRAJETÓRIA / LINHA DO TEMPO
+     ========================================================= */
+  .linha-tempo{ position: relative; padding-left: 28px; }
+  .linha-tempo::before{
+    content:'';
+    position:absolute; left:5px; top:6px; bottom:6px;
+    width:1.5px; background: var(--linha);
+  }
+  .marco{ position:relative; padding-bottom: 36px; }
+  .marco:last-child{ padding-bottom:0; }
+  .marco::before{
+    content:'';
+    position:absolute; left:-28px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background: var(--amarelo);
+    border: 2px solid var(--branco);
+    outline: 1.5px solid var(--linha);
+  }
+  .marco .quando{
+    font-family: var(--mono); font-size: 0.78rem;
+    color: var(--azul-vivo); margin-bottom: 6px; display:block;
+  }
+  .marco h4{ font-family: var(--display); font-size: 1.05rem; margin-bottom: 4px; }
+  .marco p{ font-size: 0.9rem; opacity: 0.72; }
+
+  /* =========================================================
+     CONTATO
+     ========================================================= */
+  .contato{ background: var(--tinta); color: var(--branco); }
+  .contato .cabecalho-secao h2{ color: var(--branco); }
+  .contato .cabecalho-secao p{ color: var(--branco); opacity: 0.65; }
+  .contato .rotulo{ color: var(--amarelo); }
+
+  .contato-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+  .contato-links{ display:flex; flex-direction:column; gap: 4px; }
+  .contato-links a{
+    font-family: var(--display);
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(250,246,236,0.15);
+    display:flex; justify-content:space-between; align-items:center;
+    transition: color .2s ease, padding-left .2s ease;
+  }
+  .contato-links a:hover{ color: var(--amarelo); padding-left: 8px; }
+  .contato-links a span{
+    font-family: var(--mono); font-size: 0.8rem; opacity: 0.5;
+  }
+
+  @media (max-width: 760px){
+    .contato-grid{ grid-template-columns: 1fr; }
+  }
+
+  footer{
+    background: var(--tinta); color: var(--branco);
+    padding: 24px 0 32px;
+    border-top: 1px solid rgba(250,246,236,0.12);
+  }
+  footer .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer p{ font-family: var(--mono); font-size: 0.75rem; opacity: 0.5; }
+
+  /* revelar ao rolar */
+  .reveal{
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visivel{ opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#topo" class="logo">victoria<span>.paz</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#sobre">sobre</a></li>
+      <li><a href="#atuacao">atuação</a></li>
+      <li><a href="#projetos">projetos</a></li>
+      <li><a href="#trajetoria">trajetória</a></li>
+      <li><a href="#contato">contato</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 6h18M2 11h18M2 16h18" stroke="#0F2438" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main id="topo">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="grade-pontos"></div>
+    <div class="wrap">
+      <div class="hero-conteudo">
+        <span class="eyebrow">Rio de Janeiro · Ilha do Governador</span>
+        <h1>Tecnologia aplicada com <em>propósito e território</em>.</h1>
+        <p class="lead">
+          Estudante de Defesa e Gestão Estratégica Internacional (UFRJ) e Técnica em Desenvolvimento
+          de Sistemas pelo Colégio Pedro II. Desenvolvo projetos em programação, automação e web,
+          e atuo como educadora de tecnologia formando jovens em comunidades do Rio de Janeiro.
+        </p>
+        <div class="hero-cta">
+          <a href="#projetos" class="btn btn-primario">Ver projetos →</a>
+          <a href="#contato" class="btn btn-secundario">Falar comigo</a>
+        </div>
+
+        <div class="hero-numeros">
+          <div class="numero"><b>+15</b><span>cursos ministrados</span></div>
+          <div class="numero"><b>3</b><span>anos de atuação</span></div>
+          <div class="numero"><b>4º</b><span>período · DGEI, UFRJ</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section id="sobre">
+    <div class="wrap">
+      <div class="cabecalho-secao reveal">
+        <div>
+          <span class="rotulo">01 · quem sou</span>
+          <h2>Sobre mim</h2>
+        </div>
+      </div>
+
+      <div class="sobre-grid reveal">
+        <div class="sobre-foto">
+          <!-- troque por: <img src="img-port.jpeg" alt="Victoria Paz"> -->
+          <div class="placeholder">[<img src="C:\Users\estac\Desktop\portifolio\img.port.jpeg" alt = "Victoria"></div>
+        </div>
+        <div class="sobre-texto">
+          <p>
+            Sou <strong>Técnica em Desenvolvimento de Sistemas</strong> pelo Colégio Pedro II e
+            graduanda em <strong>Defesa e Gestão Estratégica Internacional</strong> na UFRJ (IRID),
+            atualmente no 4º período. Tenho experiência prática com lógica de programação, C#,
+            Python básico, banco de dados MySQL em nível intermediário, HTML/CSS/JavaScript,
+            automação com Arduino e com inteligência artificial, além de ferramentas de
+            produtividade como Google Sheets/Excel — aplicadas tanto em projetos próprios quanto
+            no ensino técnico que ministro. Também concluí um curso de 20 horas em Inteligência
+            Artificial pela Secretaria de Juventude.
+          </p>
+          <p>
+            Acredito que tecnologia só gera impacto real quando chega até quem mais precisa dela.
+            Por isso atuo como tutora de tecnologia no Espaço da Juventude (JUVRio) e como educadora
+            de computação na ONG Escrevendo o Futuro, na Maré, ensinando robótica, programação e
+            desenvolvimento web para jovens de territórios periféricos — um trabalho que também
+            embasa minha pesquisa acadêmica, inspirada em Paulo Freire e no conceito de tecnologia social.
+          </p>
+          <p>
+            Fora da sala de aula, também empreendo com um pequeno negócio de doces e produzo
+            conteúdo educativo no Instagram (@eaivictoriapaz), o que me deu bagagem extra em
+            organização, comunicação e entrega de projetos do início ao fim.
+          </p>
+          <div class="tags">
+            <span class="tag">C#</span>
+            <span class="tag">Python (básico)</span>
+            <span class="tag">MySQL (intermediário)</span>
+            <span class="tag">HTML / CSS / JS</span>
+            <span class="tag">Automação com IA</span>
+            <span class="tag">Arduino / Robótica</span>
+            <span class="tag">Google Sheets / Excel</span>
+            <span class="tag">Educação tecnológica</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATUAÇÃO / PILARES ============ -->
+  <section id="atuacao">
+    <div class="wrap">
+      <div class="cabecalho-secao reveal">
+        <div>
+          <span class="rotulo">02 · como atuo</span>
+          <h2>Três frentes de trabalho</h2>
+        </div>
+        <p>Áreas que se conectam em torno de um mesmo objetivo: ampliar acesso.</p>
+      </div>
+
+      <div class="pilares reveal">
+        <div class="pilar">
+          <span class="num">01</span>
+          <h3>Educação tecnológica</h3>
+          <p>Curso de robótica com Arduino, desenvolvimento web (HTML/CSS/JS), lógica de programação
+          e Google Sheets para jovens no Espaço da Juventude (JUVRio) e na ONG Escrevendo o Futuro (Maré),
+          com material didático próprio e exercícios práticos.</p>
+        </div>
+        <div class="pilar">
+          <span class="num">02</span>
+          <h3>Projetos técnicos</h3>
+          <p>Desenvolvimento de projetos próprios em C#, Python e MySQL, automação com Arduino
+          (sistema de combate a incêndio) e com inteligência artificial, além de projetos web
+          (portfólio pessoal em HTML/CSS/JS), com foco em resolução de problemas.</p>
+        </div>
+        <div class="pilar">
+          <span class="num">03</span>
+          <h3>Comunicação e pesquisa</h3>
+          <p>Produção de conteúdo educativo, oratória e pesquisa acadêmica em tecnologia social,
+          aplicando referenciais como Paulo Freire à educação digital em territórios periféricos do Rio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJETOS ============ -->
+  <section id="projetos">
+    <div class="wrap">
+      <div class="cabecalho-secao reveal">
+        <div>
+          <span class="rotulo">03 · trabalhos</span>
+          <h2>Projetos selecionados</h2>
+        </div>
+        <p>Alguns dos trabalhos que desenvolvi recentemente.</p>
+      </div>
+
+      <div class="projetos reveal">
+        <a href="#" class="projeto">
+          <span class="ano">2026</span>
+          <div>
+            <h3>Sistema Automático de Combate a Incêndio (Arduino)</h3>
+            <p>Projeto de automação com sensor de chama, relé e servo motor, integrando lógica de
+            detecção e resposta em tempo real. Depuração de hardware e firmware feita do zero.</p>
+          </div>
+          <span class="seta">→</span>
+        </a>
+        <a href="#" class="projeto">
+          <span class="ano">2026</span>
+          <div>
+            <h3>Curso de Desenvolvimento Web para Jovens</h3>
+            <p>Estruturação e apresentação de curso introdutório de HTML/CSS/JS para o Espaço da
+            Juventude, com material próprio em slides e exercícios práticos guiados.</p>
+          </div>
+          <span class="seta">→</span>
+        </a>
+        <a href="#" class="projeto">
+          <span class="ano">2026</span>
+          <div>
+            <h3>Portfólio Pessoal (este site)</h3>
+            <p>Site desenvolvido do zero em HTML/CSS/JavaScript puro, com identidade visual própria,
+            responsividade e animações de interface.</p>
+          </div>
+          <span class="seta">→</span>
+        </a>
+        <!-- copie o bloco <a class="projeto"> acima para adicionar mais projetos -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRAJETÓRIA ============ -->
+  <section id="trajetoria">
+    <div class="wrap">
+      <div class="cabecalho-secao reveal">
+        <div>
+          <span class="rotulo">04 · percurso</span>
+          <h2>Trajetória</h2>
+        </div>
+        <p>Formação e principais marcos da carreira.</p>
+      </div>
+
+      <div class="linha-tempo reveal">
+        <div class="marco">
+          <span class="quando">atual</span>
+          <h4>Tutora de Tecnologia — Espaço da Juventude (JUVRio)</h4>
+          <p>Ensino de robótica, programação, desenvolvimento web e design gráfico para jovens de
+          comunidades periféricas do Rio de Janeiro.</p>
+        </div>
+        <div class="marco">
+          <span class="quando">atual</span>
+          <h4>Educadora de Computação — ONG Escrevendo o Futuro (Maré)</h4>
+          <p>Aulas de computação e programação para crianças e adolescentes da Maré.</p>
+        </div>
+        <div class="marco">
+          <span class="quando">em andamento — 4º período</span>
+          <h4>Graduação em Defesa e Gestão Estratégica Internacional — UFRJ (IRID)</h4>
+          <p>Formação em relações internacionais e defesa, com pesquisa voltada a educação digital e
+          tecnologia social em territórios periféricos.</p>
+        </div>
+        <div class="marco">
+          <span class="quando">2025</span>
+          <h4>Moção de Congratulações e Louvor — Câmara Municipal do Rio de Janeiro</h4>
+          <p>Reconhecimento pelo trabalho na implementação e fortalecimento de políticas públicas
+          para a juventude carioca.</p>
+        </div>
+        <div class="marco">
+          <span class="quando">concluído</span>
+          <h4>Técnico em Desenvolvimento de Sistemas — Colégio Pedro II</h4>
+          <p>Formação técnica em programação, lógica e desenvolvimento de sistemas.</p>
+        </div>
+        <!-- copie o bloco <div class="marco"> para adicionar mais marcos -->
+      </div>
+
+      <div class="reveal" style="margin-top:48px;">
+        <h4 style="font-family:var(--display); font-size:1.05rem; margin-bottom:16px;">Formação complementar</h4>
+        <div class="tags">
+          <span class="tag">Programação IoT — 20h</span>
+          <span class="tag">Indústria Avançada — 20h</span>
+          <span class="tag">Inteligência Artificial — 20h</span>
+          <span class="tag">Informática para Negócios — 20h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section id="contato" class="contato">
+    <div class="wrap">
+      <div class="cabecalho-secao">
+        <div>
+          <span class="rotulo">05 · vamos conversar</span>
+          <h2>Contato</h2>
+        </div>
+        <p>Aberta a oportunidades de estágio corporativo e projetos com impacto.</p>
+      </div>
+
+      <div class="contato-grid">
+        <div class="contato-links">
+          <a href="mailto:victoriacamilepaz@gmail.com">Email <span>victoriacamilepaz@gmail.com →</span></a>
+          <a href="https://instagram.com/eaivictoriapaz" target="_blank">Instagram <span>@eaivictoriapaz →</span></a>
+        </div>
+        <div>
+          <p style="opacity:.7; font-size:.95rem; max-width:360px;">
+            Estudante de Defesa e Gestão Estratégica Internacional com formação técnica em
+            desenvolvimento de sistemas, em busca de um estágio corporativo onde eu possa unir
+            visão analítica, habilidades técnicas e comunicação.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="ano"></span> Victoria Paz</p>
+    <p>Feito no Rio de Janeiro</p>
+  </div>
+</footer>
+
+<script>
+  // Ano automático no rodapé
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  // Menu mobile
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('aberto')));
+
+  // Revelar seções ao rolar
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach(e => { if (e.isIntersecting) e.target.classList.add('visivel'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
